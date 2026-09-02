@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class Pintura(models.Model):
+    nombre = models.CharField(max_length=100)
+    autor = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    fecha_de_creacion = models.DateField(auto_now_add= True)
