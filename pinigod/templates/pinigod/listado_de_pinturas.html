@@ -8,6 +8,16 @@
 <body>
     <h1>Pinturas</h1>
     <p>esta pagina es un ejemplo para mostrar pinturas</p>
-    {{numeros}}
+
+    <h2>Lista de Pinturas</h2>
+    {% if pinturas %}
+     <ul>
+          {% for pintura in pinturas %}
+              <li>{{ pintura }}</li>
+          {% endfor %}
+     </ul>
+    {% else %}
+     <p>No hay Pinturas disponibles.</p>
+    {% endif %}
 </body>
 </html>
