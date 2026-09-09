@@ -5,6 +5,7 @@ class Pintura(models.Model):
     autor = models.CharField(max_length=100)
     descripcion = models.TextField()
     fecha_de_creacion = models.DateField(auto_now_add= True)
+    nro_pintura = models.IntegerField(unique= True)
     
     def __str__(self):
         return f'Pintura {self.nombre} del autor {self.autor}'
