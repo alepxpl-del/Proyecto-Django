@@ -227,154 +227,188 @@
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
 
-            <a class="navbar-brand" href="{% url 'home' %}">
-                Galería <span>Arcana</span>
-            </a>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            Galería <span>Arcana</span>
+        </a>
 
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Abrir navegación">
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Abrir navegación">
 
-                <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
 
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_pinturas' %}">
+                        Nombre
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        Autor
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        Galerias
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- CONTENIDO PRINCIPAL -->
+
+<main class="container-main">
+
+    <h1 class="page-title">
+        Pinturas
+    </h1>
+
+    <p class="page-subtitle">
+        Explora las obras registradas en nuestra colección.
+    </p>
+
+
+    <!-- BUSCADOR Y NUEVA PINTURA -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4 gap-3">
+
+        <!-- BUSCADOR -->
+
+        <form method="GET" class="d-flex flex-grow-1">
+
+            <input
+                type="text"
+                name="nombre"
+                class="form-control"
+                placeholder="Buscar pintura por nombre..."
+                value="{{ request.GET.nombre }}"
+            >
+
+            <button type="submit" class="btn btn-action btn-ver ms-2">
+                Buscar
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+        </form>
 
-                <ul class="navbar-nav ms-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar_pinturas' %}">
-                            Nombre
+        <!-- NUEVA PINTURA -->
+
+        <a href="{% url 'crear_pintura' %}"
+           class="btn btn-action btn-editar text-nowrap">
+            + Nueva Pintura
+        </a>
+
+    </div>
+
+
+    <!-- TABLA -->
+
+    <div class="table-container">
+
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+
+                    <th>
+                        Nombre de la pintura
+                    </th>
+
+                    <th>
+                        Autor
+                    </th>
+
+                    <th class="text-center">
+                        Acciones
+                    </th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                {% for pintura in pinturas %}
+
+                <tr>
+
+                    <!-- NOMBRE -->
+
+                    <td class="pintura-nombre">
+                        {{ pintura.nombre }}
+                    </td>
+
+
+                    <!-- AUTOR -->
+
+                    <td class="autor">
+                        {{ pintura.autor }}
+                    </td>
+
+
+                    <!-- BOTONES -->
+
+                    <td class="text-center">
+
+                        <a href="{% url 'ver_pintura' pintura.id %}"
+                           class="btn btn-action btn-ver">
+                            Ver
                         </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            Autor
+                        <a href=""
+                           class="btn btn-action btn-editar">
+                            Editar
                         </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            Galerias
+                        <a href=""
+                           class="btn btn-action btn-eliminar">
+                            Eliminar
                         </a>
-                    </li>
 
-                </ul>
+                    </td>
 
-            </div>
-        </div>
-    </nav>
+                </tr>
 
+                {% empty %}
 
-    <!-- CONTENIDO PRINCIPAL -->
+                <tr>
+                    <td colspan="3" class="empty-message">
+                        No hay pinturas registradas todavía.
+                    </td>
+                </tr>
 
-    <main class="container-main">
+                {% endfor %}
 
-        <h1 class="page-title">
-            Pinturas
-        </h1>
+            </tbody>
 
-        <p class="page-subtitle">
-            Explora las obras registradas en nuestra colección.
-        </p>
+        </table>
 
+    </div>
 
-        <!-- TABLA -->
+</main>
 
-        <div class="table-container">
-
-            <table class="table table-hover">
-
-                <thead>
-                    <tr>
-
-                        <th>
-                            Nombre de la pintura
-                        </th>
-
-                        <th>
-                            Autor
-                        </th>
-
-                        <th class="text-center">
-                            Acciones
-                        </th>
-
-                    </tr>
-                </thead>
-
-
-                <tbody>
-
-                    {% for pintura in pinturas %}
-
-                    <tr>
-
-                        <!-- NOMBRE -->
-
-                        <td class="pintura-nombre">
-                            {{ pintura.nombre }}
-                        </td>
-
-
-                        <!-- AUTOR -->
-
-                        <td class="autor">
-                            {{ pintura.autor }}
-                        </td>
-
-
-                        <!-- BOTONES -->
-
-                        <td class="text-center">
-
-                            <a href="{% url 'ver_pintura' pintura.id %}"
-                               class="btn btn-action btn-ver">
-                                Ver
-                            </a>
-
-                            <a href=""
-                               class="btn btn-action btn-editar">
-                                Editar
-                            </a>
-
-                            <a href=""
-                               class="btn btn-action btn-eliminar">
-                                Eliminar
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                    {% empty %}
-
-                    <tr>
-                        <td colspan="3" class="empty-message">
-                            No hay pinturas registradas todavía.
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </main>
 
 
     <!-- FOOTER -->
@@ -392,4 +426,3 @@
 
 </body>
 </html>
-```
