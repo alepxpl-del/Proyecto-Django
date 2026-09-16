@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max
 from pinigod.models import Pintura
 from pinigod.forms import PinturaForm
-
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 def pinigod(request):
     return render(request, 'pinigod/pinigod.html')
@@ -34,3 +35,14 @@ def crear_pintura(request):
         form = PinturaForm()
 
     return render(request, "pinigod/crear_pintura.html", {"form": form})
+
+class EditarPintura(UpdateView):
+    model = Pintura
+    fields = "__all__"
+    template_name = "pinigod/editar_pintura.html"
+    success_url = reverse_lazy('listar_pinturas')
+
+class EliminarPintura(DeleteView):
+    model = Pintura 
+    template_name = "pinigod/eliminar_pintura.html"
+    success_url = reverse_lazy('listar_pinturas')
