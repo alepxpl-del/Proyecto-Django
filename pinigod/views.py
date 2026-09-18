@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max
 from pinigod.models import Pintura
-from pinigod.forms import PinturaForm
+from pinigod.forms import PinturaForm, MiFormularioDeCreacion
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login
+
 
 def pinigod(request):
     return render(request, 'pinigod/pinigod.html')
@@ -46,3 +49,31 @@ class EliminarPintura(DeleteView):
     model = Pintura 
     template_name = "pinigod/eliminar_pintura.html"
     success_url = reverse_lazy('listar_pinturas')
+
+#########################################################
+# INICIO DE SESION (SE DEBERIA HACER EN UNA APP APARTE) #
+#########################################################
+
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usuario = form.get_user()
+            login(request, usuario)
+            return redirect("home")
+    else:
+        form = AuthenticationForm() 
+
+    return render(request, 'pinigod/iniciar_sesion.html', {"form": form})
+
+def registro(request):
+    if request.method == 'POST':
+        form =MiFormularioDeCreacion(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect("home")
+    else:
+        form = MiFormularioDeCreacion() 
+
+    return render(request, 'pinigod/registro.html', {"form": form})

@@ -195,11 +195,25 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="">Nombre</a>
+                        <a class="nav-link" href="">
+                            {{request.user.username}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Autor</a>
+                        <form action = "{% url 'cerrar_sesion' %}" method="post"> 
+                            {% csrf_token %}
+                            <input type="submit" value="Cerrar sesion" class="btn btn-danger">
+                        </form>
+                     </li> 
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+                    </li>
+                       <li class="nav-item">
+                        <a class="btn btn-secondary" href="{% url 'registro' %}">Registro</a>
+                    </li>
+                    {% endif %}
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'listar_pinturas' %}">Pinturas</a>
