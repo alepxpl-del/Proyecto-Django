@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
+    {% block titulo %}<title>Document</title>{% endblock %}
 </head>
 <body>
     <h1>Primera prueba de sitio web</h1>
@@ -202,16 +202,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <form action = "{% url 'cerrar_sesion' %}" method="post"> 
+                        <form action = "{% url 'logout' %}" method="post"> 
                             {% csrf_token %}
                             <input type="submit" value="Cerrar sesion" class="btn btn-danger">
                         </form>
                      </li> 
                     {% else %}
-                        <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+                        <a class="btn btn-primary" href="{% url 'login' %}">Iniciar Sesion</a>
                     </li>
                        <li class="nav-item">
-                        <a class="btn btn-secondary" href="{% url 'registro' %}">Registro</a>
+                        <a class="btn btn-secondary" href="{% url 'register' %}">Registro</a>
                     </li>
                     {% endif %}
                     </li>
@@ -225,6 +225,7 @@
 
 
     <!-- HERO -->
+     {% block contenido %}
     <header class="hero">
         <div class="container">
             <h1>Galería de Arte</h1>
@@ -301,6 +302,7 @@
 
         </div>
     </main>
+    {% endblock %}
 
 
     <!-- FOOTER -->

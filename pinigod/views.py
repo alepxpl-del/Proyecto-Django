@@ -39,7 +39,9 @@ def crear_pintura(request):
 
     return render(request, "pinigod/crear_pintura.html", {"form": form})
 
-class EditarPintura(UpdateView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class EditarPintura(LoginRequiredMixin, UpdateView):
     model = Pintura
     fields = "__all__"
     template_name = "pinigod/editar_pintura.html"
@@ -54,26 +56,26 @@ class EliminarPintura(DeleteView):
 # INICIO DE SESION (SE DEBERIA HACER EN UNA APP APARTE) #
 #########################################################
 
-def iniciar_sesion(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            usuario = form.get_user()
-            login(request, usuario)
-            return redirect("home")
-    else:
-        form = AuthenticationForm() 
+# def iniciar_sesion(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             usuario = form.get_user()
+#             login(request, usuario)
+#             return redirect("home")
+#     else:
+#         form = AuthenticationForm() 
 
-    return render(request, 'pinigod/iniciar_sesion.html', {"form": form})
+#     return render(request, 'pinigod/iniciar_sesion.html', {"form": form})
 
-def registro(request):
-    if request.method == 'POST':
-        form =MiFormularioDeCreacion(request.POST)
-        if form.is_valid():
-            form.save()
+# def registro(request):
+#     if request.method == 'POST':
+#         form =MiFormularioDeCreacion(request.POST)
+#         if form.is_valid():
+#             form.save()
 
-            return redirect("home")
-    else:
-        form = MiFormularioDeCreacion() 
+#             return redirect("home")
+#     else:
+#         form = MiFormularioDeCreacion() 
 
-    return render(request, 'pinigod/registro.html', {"form": form})
+#     return render(request, 'pinigod/registro.html', {"form": form})

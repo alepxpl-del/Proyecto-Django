@@ -1,0 +1,10 @@
+{% extends "pinigod/pinigod.html" %}
+{% block titulo %}<title>Registro</title>{% endblock %}
+{% block contenido %}
+<h1>Iniciar Sesion</h1>
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrasrse</button>
+    </form>
+{% endblock %}
